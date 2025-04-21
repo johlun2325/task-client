@@ -24,7 +24,7 @@ const HomePage = () => {
           
           {/* Tasks */}
           <div className="bg-white p-6 rounded-lg shadow h-96">
-            <h3 className="text-lg font-medium mb-4">Your Tasks</h3>
+            <h3 className="text-lg font-medium mb-4">All Tasks</h3>
             <div className="h-[calc(100%-2rem)] overflow-y-auto">
               <TaskList />
             </div>
@@ -32,7 +32,7 @@ const HomePage = () => {
           
           {/* High Priority */}
           <div className="bg-white p-6 rounded-lg shadow h-96">
-            <h3 className="text-lg font-medium mb-4">High Priority</h3>
+            <h3 className="text-lg font-medium mb-4">Priority tasks</h3>
             <div className="h-[calc(100%-2rem)] overflow-y-auto">
               {/* Content */}
             </div>
