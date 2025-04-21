@@ -35,7 +35,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
                 </Link>
               </li>
               <li>
-                <Link to="/done" className="block p-2 rounded hover:bg-gray-100">
+                <Link to="/completed" className="block p-2 rounded hover:bg-gray-100">
                   Done
                 </Link>
               </li>

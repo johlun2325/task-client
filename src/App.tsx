@@ -1,7 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MainLayout from './components/layout/MainLayout';
 import HomePage from './pages/Home';
-import CreateTask from './pages/CreateTask';
+import AllTasks from './pages/AllTasks';
+import AllNotes from './pages/AllNotes';
+import CompletedTasks from './pages/CompletedTasks';
 
 function App() {
   return (
@@ -9,7 +11,9 @@ function App() {
       <MainLayout>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/tasks" element={<CreateTask />} />
+          <Route path="/tasks" element={<AllTasks />} />
+          <Route path="/notes" element={<AllNotes />} />
+          <Route path="/completed" element={<CompletedTasks />} />
         </Routes>
       </MainLayout>
     </Router>
