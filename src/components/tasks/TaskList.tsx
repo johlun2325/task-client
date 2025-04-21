@@ -24,10 +24,19 @@ const TaskList = () => {
               className="mt-1 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
               readOnly
             />
-            <div className="ml-3">
-              <p className={`text-sm font-medium ${task.completed ? 'line-through text-gray-400' : 'text-gray-900'}`}>
-                {task.name}
-              </p>
+           <div className="ml-3 flex-grow">
+              <div className="flex items-center justify-between">
+                <p className={`text-sm font-medium ${task.completed ? 'line-through text-gray-400' : 'text-gray-900'}`}>
+                  {task.name}
+                </p>
+                
+                {task.priority && (
+                  <span className="bg-red-100 text-red-800 text-xs font-semibold px-2.5 py-0.5 rounded">
+                    High Priority
+                  </span>
+                )}
+              </div>
+              
               <p className="mt-1 text-sm text-gray-500">{task.description}</p>
             </div>
           </div>

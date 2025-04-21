@@ -32,7 +32,7 @@ const HomePage = () => {
           
           {/* High Priority */}
           <div className="bg-white p-6 rounded-lg shadow h-96">
-            <h3 className="text-lg font-medium mb-4">Priority tasks</h3>
+            <h3 className="text-lg font-medium mb-4">Priority</h3>
             <div className="h-[calc(100%-2rem)] overflow-y-auto">
               {/* Content */}
             </div>
