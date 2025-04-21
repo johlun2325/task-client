@@ -12,7 +12,7 @@ export const mockTasks: Task[] = [
     id: '64b1e2c7f9a1a8d0e3f0b1a2',
     name: 'Sed do eiusmod',
     description: 'Tempor incididunt ut labore et dolore magna aliqua.',
-    completed: true,
+    completed: true, //completed
     priority: false
   },
   {
