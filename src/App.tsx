@@ -1,5 +1,8 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
 import MainLayout from './components/layout/MainLayout';
+import LandingPage from './pages/LandingPage';
 import HomePage from './pages/Home';
 import AllTasks from './pages/AllTasks';
 import AllNotes from './pages/AllNotes';
@@ -7,16 +10,49 @@ import CompletedTasks from './pages/CompletedTasks';
 
 function App() {
   return (
-    <Router>
-      <MainLayout>
+    <AuthProvider>
+      <Router>
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/tasks" element={<AllTasks />} />
-          <Route path="/notes" element={<AllNotes />} />
-          <Route path="/completed" element={<CompletedTasks />} />
+          {/* Public landing page */}
+          <Route path="/" element={<LandingPage />} />
+          
+          {/* Protected routes, needs logging in */}
+          <Route path="/dashboard" element={
+            <ProtectedRoute>
+              <MainLayout>
+                <HomePage />
+              </MainLayout>
+            </ProtectedRoute>
+          } />
+          
+          <Route path="/tasks" element={
+            <ProtectedRoute>
+              <MainLayout>
+                <AllTasks />
+              </MainLayout>
+            </ProtectedRoute>
+          } />
+          
+          <Route path="/notes" element={
+            <ProtectedRoute>
+              <MainLayout>
+                <AllNotes />
+              </MainLayout>
+            </ProtectedRoute>
+          } />
+          
+          <Route path="/completed" element={
+            <ProtectedRoute>
+              <MainLayout>
+                <CompletedTasks />
+              </MainLayout>
+            </ProtectedRoute>
+          } />
+          
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
-      </MainLayout>
-    </Router>
+      </Router>
+    </AuthProvider>
   );
 }
 

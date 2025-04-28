@@ -1,16 +1,24 @@
 import { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 interface MainLayoutProps {
   children: ReactNode;
 }
 const MainLayout = ({ children }: MainLayoutProps) => {
+  const { logout } = useAuth();
+
   return (
     <div className="h-screen flex flex-col bg-gray-50">
       
       <header className="bg-white shadow-sm h-16 flex items-center z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <h1 className="text-xl font-bold text-gray-900">Chaos Manager</h1>
+          <button 
+            onClick={logout}
+            className="text-sm font-medium text-gray-600 hover:text-gray-900">
+            Log out
+          </button>
         </div>
       </header>
 
