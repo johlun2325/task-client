@@ -13,11 +13,5 @@ export const mockNotes: Note[] = [
     { id: '64d3e1c8a7f0b2c3d4e5f6a9', title: 'Minim veniam', content: 'Quis nostrud exercitation ullamco laboris.' },
     { id: '64d3e1c8a7f0b2c3d4e5f6aa', title: 'Reprehenderit', content: 'In voluptate velit esse cillum dolore.' },
     { id: '64d3e1c8a7f0b2c3d4e5f6ab', title: 'Fugiat nulla', content: 'Pariatur. Excepteur sint occaecat cupidatat.' },
-    { id: '64d3e1c8a7f0b2c3d4e5f6ac', title: 'Laborum', content: 'Lorem ipsum dolor sit amet, consectetur.' },
-    { id: '64d3e1c8a7f0b2c3d4e5f6ac', title: 'Laborum', content: 'Lorem ipsum dolor sit amet, consectetur.' },
-    { id: '64d3e1c8a7f0b2c3d4e5f6ac', title: 'Laborum', content: 'Lorem ipsum dolor sit amet, consectetur.' },
-    { id: '64d3e1c8a7f0b2c3d4e5f6ac', title: 'Laborum', content: 'Lorem ipsum dolor sit amet, consectetur.' },
-    { id: '64d3e1c8a7f0b2c3d4e5f6ac', title: 'Laborum', content: 'Lorem ipsum dolor sit amet, consectetur.' },
-    { id: '64d3e1c8a7f0b2c3d4e5f6ac', title: 'Laborum', content: 'Lorem ipsum dolor sit amet, consectetur.' },
     { id: '64d3e1c8a7f0b2c3d4e5f6ac', title: 'Laborum', content: 'Lorem ipsum dolor sit amet, consectetur.' }
   ];

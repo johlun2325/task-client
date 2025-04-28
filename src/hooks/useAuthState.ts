@@ -4,7 +4,7 @@ import { AuthState } from '../types/Auth';
 
 export const useAuthState = (): AuthState & {
   login: () => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<void>;
 } => {
   const [state, setState] = useState<AuthState>({
     isAuthenticated: false,
@@ -31,9 +31,15 @@ export const useAuthState = (): AuthState & {
     }
   };
 
-  const logout = (): void => {
-    authService.logout();
-    setState(prev => ({ ...prev, isAuthenticated: false }));
+  const logout = async (): Promise<void> => {
+    setState(prev => ({ ...prev, isLoading: true }));
+    try {
+      await authService.logout();
+      setState(prev => ({ ...prev, isAuthenticated: false, isLoading: false }));
+    } catch (error) {
+      console.error('Logout failed:', error);
+      setState(prev => ({ ...prev, isLoading: false }));
+    }
   };
 
   return {

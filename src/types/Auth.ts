@@ -5,5 +5,6 @@ export interface AuthState {
   
 export interface AuthContextType extends AuthState {
     login: () => Promise<void>;
-    logout: () => void;
-}
+    logout: () => Promise<void>;
+  }
+  
