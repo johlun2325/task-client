@@ -6,4 +6,8 @@ export interface Task {
   priority: boolean;
 }
 
+// for tasks without id and completed fields
 export type NewTask = Omit<Task, 'id' | 'completed'>;
+
+// for paritial updates
+export type TaskUpdate = Partial<Task>;

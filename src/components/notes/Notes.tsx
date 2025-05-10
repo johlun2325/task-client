@@ -6,9 +6,8 @@ const Notes = () => {
   }
   
   return (
-    <div className="h-full overflow-y-auto pr-2"> {/* Lägg till overflow-y-auto för scrollning */}
+    <div className="h-full overflow-y-auto pr-2">
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-        {/* "Add Note" knapp - placerad först i griden */}
         <div className="bg-white border border-dashed border-gray-300 p-3 rounded flex items-center justify-center cursor-pointer hover:border-blue-500 transition-colors aspect-square">
           <div className="text-center">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mx-auto text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">

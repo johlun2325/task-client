@@ -3,3 +3,6 @@ export interface Note {
     title: string;
     content: string;
   }
+  
+  // for note without id field
+  export type NewNote = Omit<Note, 'id'>;

@@ -1,13 +1,27 @@
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
-import { Navigate } from 'react-router-dom';
 
 const LandingPage = () => {
-  const { isAuthenticated, login, isLoading } = useAuth();
-
-  // If logged in, to dashboard/home
-  if (isAuthenticated) {
-    return <Navigate to="/dashboard" />;
-  }
+  const { isAuthenticated, login, isLoading, error } = useAuth();
+  const navigate = useNavigate();
+  const [authError, setAuthError] = useState<string | null>(null);
+  
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlError = urlParams.get('error');
+    
+    if (urlError) {
+      setAuthError(urlError);
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, []);
+  
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/dashboard');
+    }
+  }, [isAuthenticated, navigate]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -15,9 +29,15 @@ const LandingPage = () => {
         <div className="text-center">
           <h1 className="text-3xl font-extrabold text-gray-900">Chaos Manager</h1>
           <p className="mt-3 text-gray-600">
-            Welcome to your chaotic playground!
+            Välkommen till din personliga organisationsassistent!
           </p>
         </div>
+        
+        {(error || authError) && (
+          <div className="bg-red-50 border-l-4 border-red-500 p-4 my-4">
+            <p className="text-red-700">{error || authError}</p>
+          </div>
+        )}
         
         <div className="mt-8">
           <button
@@ -25,13 +45,13 @@ const LandingPage = () => {
             disabled={isLoading}
             className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
           >
-            {isLoading ? 'Logging in...' : 'Login'}
+            {isLoading ? 'Loggar in...' : 'Logga in med Google'}
           </button>
         </div>
         
         <div className="mt-6 text-center">
           <p className="text-sm text-gray-600">
-            Login to see and manage all your tasks.
+            Logga in för att komma åt alla funktioner och hantera dina uppgifter.
           </p>
         </div>
       </div>
