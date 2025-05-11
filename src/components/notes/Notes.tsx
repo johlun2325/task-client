@@ -11,12 +11,13 @@ const Notes = () => {
     return <p className="text-red-500">Error: {error}</p>;
   }
 
-  if (notes.length === 0) {
-    return <p className="text-gray-500">No notes yet. Create one!</p>;
-  }
-
   return (
     <div className="h-full overflow-y-auto pr-2">
+      
+      {notes.length === 0 && (
+        <p className="text-gray-500 mb-4">No notes yet. Create one!</p>
+      )}      
+      
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
 
         <div className="bg-white border border-dashed border-gray-300 p-3 rounded flex items-center justify-center cursor-pointer hover:border-blue-500 transition-colors aspect-square">

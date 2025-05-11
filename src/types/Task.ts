@@ -9,8 +9,13 @@ export interface Task {
   completedAt: number;
 }
 
-// for tasks without id and completed fields
-export type NewTask = Omit<Task, 'uid'>;
+// payload
+export type NewTask = {
+  title: string;
+  description: string;
+  priority: boolean;
+  completed: boolean;
+};
 
-// for paritial updates
-export type TaskUpdate = Partial<Task>;
+// for partial updates
+export type TaskUpdate = Partial<NewTask>;
