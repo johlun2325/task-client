@@ -1,7 +1,7 @@
 import { authService } from '../auth/services/AuthService';
 import { Note, NewNote, NoteUpdate } from '../types/Note';
 import { Task, NewTask, TaskUpdate} from '../types/Task'
-import { ApiResponse } from '../types/apiResponse';
+import { ApiResponse } from '../types/ApiResponse';
 
 const API_BASE_URL = 'http://localhost:8080';
 
@@ -90,34 +90,35 @@ export const apiService = {
   task: {
     getAll: async (): Promise<Task[]> => {
       const response = await apiService.fetchAuthenticated('/task/all');
-      
+  
       if (!response.ok) {
         throw new Error('Failed to fetch tasks');
       }
-      
-
+  
       const result: ApiResponse<Task[]> = await response.json();
-      return result.data;    
+      return result.data;
     },
-    
+  
     getPriority: async (): Promise<Task[]> => {
       const response = await apiService.fetchAuthenticated('/task/priority');
-      
+  
       if (!response.ok) {
         throw new Error('Failed to fetch priority tasks');
       }
-      
-      return response.json();
+  
+      const result: ApiResponse<Task[]> = await response.json();
+      return result.data;
     },
-    
+  
     getCompleted: async (): Promise<Task[]> => {
       const response = await apiService.fetchAuthenticated('/task/completed');
-      
+  
       if (!response.ok) {
         throw new Error('Failed to fetch completed tasks');
       }
-      
-      return response.json();
+  
+      const result: ApiResponse<Task[]> = await response.json();
+      return result.data;
     },
     
     create: async (task: NewTask): Promise<Task> => {

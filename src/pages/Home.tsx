@@ -1,4 +1,5 @@
 import Notes from '../components/notes/Notes';
+import PriorityTasks from '../components/tasks/PriorityTasks';
 import TaskList from '../components/tasks/Tasks';
 
 const HomePage = () => {
@@ -34,7 +35,7 @@ const HomePage = () => {
           <div className="bg-white p-6 rounded-lg shadow h-96">
             <h3 className="text-lg font-medium mb-4">Priority</h3>
             <div className="h-[calc(100%-2rem)] overflow-y-auto">
-              {/* Content */}
+              <PriorityTasks />
             </div>
           </div>
         </div>

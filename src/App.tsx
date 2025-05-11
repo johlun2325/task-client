@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthProvider } from './auth/AuthProviders';
 import { AuthCallback } from './auth/AuthCallback';
 import { authService } from './auth/services/AuthService';
-import ProtectedRoute from './components/ProtectedRoute';
+import ProtectedRoute from './auth/ProtectedRoute';
 import MainLayout from './components/layout/MainLayout';
 import LandingPage from './pages/LandingPage';
 import HomePage from './pages/Home';
