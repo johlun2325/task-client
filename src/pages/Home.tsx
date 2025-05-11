@@ -1,5 +1,5 @@
 import Notes from '../components/notes/Notes';
-import TaskList from '../components/tasks/TaskList';
+import TaskList from '../components/tasks/Tasks';
 
 const HomePage = () => {
     return (

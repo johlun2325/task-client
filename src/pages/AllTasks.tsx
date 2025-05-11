@@ -1,4 +1,4 @@
-import TaskList from '../components/tasks/TaskList';
+import TaskList from '../components/tasks/Tasks';
 
 const AllTasks = () => {
     return (

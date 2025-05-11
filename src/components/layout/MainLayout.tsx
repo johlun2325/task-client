@@ -1,31 +1,34 @@
-import { ReactNode } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../../auth/hooks/useAuth';
 
-interface MainLayoutProps {
-  children: ReactNode;
-}
-const MainLayout = ({ children }: MainLayoutProps) => {
-
+const MainLayout = ({ children }: { children: React.ReactNode }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { logout } = useAuth();
 
   return (
     <div className="h-screen flex flex-col bg-gray-50">
-      
       <header className="bg-white shadow-sm h-16 flex items-center z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex justify-between">
           <h1 className="text-xl font-bold text-gray-900">Chaos Manager</h1>
-          <button 
+          <button
             onClick={logout}
-            className="text-sm font-medium text-gray-600 hover:text-gray-900">
+            className="text-sm font-medium text-gray-600 hover:text-gray-900"
+          >
             Log out
+          </button>
+          <button
+            className="lg:hidden text-gray-600"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            <span className="material-icons">Menu</span>
           </button>
         </div>
       </header>
 
       <div className="flex flex-1 overflow-hidden">
-        
-        <aside className="w-46 bg-white shadow-md p-4 overflow-y-auto">
+
+        <aside className={`lg:block w-64 bg-white shadow-md p-4 overflow-y-auto ${isMenuOpen ? 'block' : 'hidden'} lg:static`}>
           <nav>
             <ul className="space-y-2">
               <li>
@@ -55,7 +58,6 @@ const MainLayout = ({ children }: MainLayoutProps) => {
         <main className="flex-1 p-6 overflow-y-auto">
           {children}
         </main>
-        
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
-import { AuthContext } from '../context/authContext';
-import { useAuthState } from '../hooks/useAuthState';
+import { AuthContext } from './authContext';
+import { useAuthState } from './hooks/useAuthState';
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const authState = useAuthState();

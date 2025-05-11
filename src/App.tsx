@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider } from './providers/AuthProviders';
-import { AuthCallback } from './components/AuthCallback';
-import { authService } from './services/AuthService';
+import { AuthProvider } from './auth/AuthProviders';
+import { AuthCallback } from './auth/AuthCallback';
+import { authService } from './auth/services/AuthService';
 import ProtectedRoute from './components/ProtectedRoute';
 import MainLayout from './components/layout/MainLayout';
 import LandingPage from './pages/LandingPage';

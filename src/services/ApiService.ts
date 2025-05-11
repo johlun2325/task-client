@@ -1,4 +1,7 @@
-import { authService } from './AuthService';
+import { authService } from '../auth/services/AuthService';
+import { Note, NewNote, NoteUpdate } from '../types/Note';
+import { Task, NewTask, TaskUpdate} from '../types/Task'
+import { ApiResponse } from '../types/apiResponse';
 
 const API_BASE_URL = 'http://localhost:8080';
 
@@ -13,7 +16,8 @@ export const apiService = {
     
     const headers = {
       ...options.headers,
-      'Authorization': `Bearer ${token}`
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
     };
     
     const response = await fetch(`${API_BASE_URL}${endpoint}`, {
@@ -23,7 +27,6 @@ export const apiService = {
     
     // Handle 401, invalid token
     if (response.status === 401) {
-    
       // Remove token and route to landing page for login
       authService.logout();
       window.location.href = '/';
@@ -33,14 +36,124 @@ export const apiService = {
     return response;
   },
   
-  // Test endpoint to fetch tasks
-  getTasks: async () => {
-    const response = await apiService.fetchAuthenticated('/api/tasks');
+  // Notes endpoints
+  note: {
+    getAll: async (): Promise<Note[]> => {
+      const response = await apiService.fetchAuthenticated('/note/all');
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch notes');
+      }
+  
+      const result: ApiResponse<Note[]> = await response.json();
+      return result.data;
+    },
     
-    if (!response.ok) {
-      throw new Error('Failed to fetch tasks');
+    create: async (note: NewNote): Promise<Note> => {
+      const response = await apiService.fetchAuthenticated('/note/create', {
+        method: 'POST',
+        body: JSON.stringify(note)
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to create note');
+      }
+      
+      return response.json();
+    },
+    
+    update: async (uid: string, note: NoteUpdate): Promise<Note> => {
+      const response = await apiService.fetchAuthenticated(`/note/update/${uid}`, {
+        method: 'PUT',
+        body: JSON.stringify(note)
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to update note');
+      }
+      
+      return response.json();
+    },
+    
+    delete: async (uid: string): Promise<void> => {
+      const response = await apiService.fetchAuthenticated(`/note/delete/${uid}`, {
+        method: 'DELETE'
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to delete note');
+      }
     }
+  },
+  
+  // Tasks endpoints
+  task: {
+    getAll: async (): Promise<Task[]> => {
+      const response = await apiService.fetchAuthenticated('/task/all');
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch tasks');
+      }
+      
+
+      const result: ApiResponse<Task[]> = await response.json();
+      return result.data;    
+    },
     
-    return response.json();
+    getPriority: async (): Promise<Task[]> => {
+      const response = await apiService.fetchAuthenticated('/task/priority');
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch priority tasks');
+      }
+      
+      return response.json();
+    },
+    
+    getCompleted: async (): Promise<Task[]> => {
+      const response = await apiService.fetchAuthenticated('/task/completed');
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch completed tasks');
+      }
+      
+      return response.json();
+    },
+    
+    create: async (task: NewTask): Promise<Task> => {
+      const response = await apiService.fetchAuthenticated('/task/create', {
+        method: 'POST',
+        body: JSON.stringify(task)
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to create task');
+      }
+      
+      return response.json();
+    },
+    
+    update: async (uid: string, task: TaskUpdate): Promise<Task> => {
+      const response = await apiService.fetchAuthenticated(`/task/update/${uid}`, {
+        method: 'PUT',
+        body: JSON.stringify(task)
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to update task');
+      }
+      
+      return response.json();
+    },
+    
+    delete: async (uid: string): Promise<void> => {
+      const response = await apiService.fetchAuthenticated(`/task/delete/${uid}`, {
+        method: 'DELETE'
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to delete task');
+      }
+    }
   }
 };

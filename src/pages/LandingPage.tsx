@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../auth/hooks/useAuth';
 
 const LandingPage = () => {
   const { isAuthenticated, login, isLoading, error } = useAuth();
