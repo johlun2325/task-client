@@ -8,8 +8,11 @@ export type Note = {
   updatedAt: number;
 };
 
-  // for note without id field
-  export type NewNote = Omit<Note, 'uid'>;
+// payload
+export type NewNote = {
+    title: string;
+    text: string | null;
+};
 
   // for partial updates
   export type NoteUpdate = Partial<Note>;

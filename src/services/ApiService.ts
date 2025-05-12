@@ -49,14 +49,14 @@ export const apiService = {
       return result.data;
     },
     
-    create: async (note: NewNote): Promise<Note> => {
+    create: async (task: NewNote): Promise<Note> => {
       const response = await apiService.fetchAuthenticated('/note/create', {
         method: 'POST',
-        body: JSON.stringify(note)
+        body: JSON.stringify(task)
       });
       
       if (!response.ok) {
-        throw new Error('Failed to create note');
+        throw new Error('Failed to create task');
       }
       
       return response.json();

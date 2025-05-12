@@ -1,7 +1,10 @@
+import { useState } from 'react';
 import { useNotes } from '../../hooks/useNotes';
+import CreateNoteModal from './CreateNoteModal';
 
 const Notes = () => {
-  const { notes, loading, error } = useNotes();
+  const { notes, loading, error, refetch } = useNotes();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   if (loading) {
     return <p className="text-gray-500">Loading notes...</p>;
@@ -13,14 +16,16 @@ const Notes = () => {
 
   return (
     <div className="h-full overflow-y-auto pr-2">
-      
       {notes.length === 0 && (
         <p className="text-gray-500 mb-4">No notes yet. Create one!</p>
-      )}      
-      
+      )}
+
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
 
-        <div className="bg-white border border-dashed border-gray-300 p-3 rounded flex items-center justify-center cursor-pointer hover:border-blue-500 transition-colors aspect-square">
+        <div
+          className="bg-white border border-dashed border-gray-300 p-3 rounded flex items-center justify-center cursor-pointer hover:border-blue-500 transition-colors aspect-square"
+          onClick={() => setIsModalOpen(true)}
+        >
           <div className="text-center">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mx-auto text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -41,6 +46,14 @@ const Notes = () => {
           </div>
         ))}
       </div>
+
+      {isModalOpen && (
+        <CreateNoteModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onCreated={refetch}
+        />
+      )}
     </div>
   );
 };

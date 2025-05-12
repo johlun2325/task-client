@@ -1,27 +1,29 @@
-import { useState, useEffect } from 'react';
-import { apiService } from '../services/ApiService'
+import { useEffect, useState, useCallback } from 'react';
 import { Note } from '../types/Note';
+import { apiService } from '../services/ApiService';
 
 export const useNotes = () => {
   const [notes, setNotes] = useState<Note[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchNotes = async () => {
-      try {
-        const response: Note[] = await apiService.note.getAll();
-        setNotes(response);
-        setLoading(false);
-      } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : 'Failed to fetch notes';
-        setError(errorMessage);
-        setLoading(false);
-      }
-    };
-
-    fetchNotes();
+  const fetchNotes = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await apiService.note.getAll();
+      setNotes(data);
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to fetch priority tasks';
+      setError(errorMessage);    } 
+      finally {
+      setLoading(false);
+    }
   }, []);
 
-  return { notes, loading, error };
+  useEffect(() => {
+    fetchNotes();
+  }, [fetchNotes]);
+
+  return { notes, loading, error, refetch: fetchNotes };
 };
