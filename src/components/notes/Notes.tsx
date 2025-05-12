@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNotes } from '../../hooks/useNotes';
+
 import CreateNoteModal from './CreateNoteModal';
 
 const Notes = () => {
@@ -34,7 +35,10 @@ const Notes = () => {
           </div>
         </div>
 
-        {notes.map((note) => (
+        {notes
+        .slice()
+        .sort((a, b) => b.updatedAt - a.updatedAt)
+        .map((note) => (
           <div 
             key={note.uid} 
             className="bg-yellow-100 p-3 rounded shadow-sm aspect-square transform hover:scale-105 hover:shadow-md cursor-pointer transition-all"

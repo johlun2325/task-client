@@ -1,35 +1,56 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
 import { apiService } from '../../services/ApiService';
+import { Task } from '../../types/Task';
 
 interface CreateTaskModalProps {
   isOpen: boolean;
   onClose: () => void;
   onCreated: () => Promise<void>;
+  existingTask?: Task | null;
 }
 
-const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ isOpen, onClose, onCreated }) => {
+const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ isOpen, onClose, onCreated, existingTask }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [priority, setPriority] = useState(false);
+
+  useEffect(() => {
+    if (existingTask) {
+      setTitle(existingTask.title);
+      setDescription(existingTask.description);
+      setPriority(existingTask.priority);
+    } else {
+      setTitle('');
+      setDescription('');
+      setPriority(false);
+    }
+  }, [existingTask]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      await apiService.task.create({
-        title,
-        description,
-        priority,
-        completed: false,
-      });
+      if (existingTask) {
+        await apiService.task.update(existingTask.uid, {
+          title,
+          description,
+          priority,
+          completed: existingTask.completed,
+        });
+      } else {
+        await apiService.task.create({
+          title,
+          description,
+          priority,
+          completed: false,
+        });
+      }
+
       await onCreated();
       onClose();
-      setTitle('');
-      setDescription('');
-      setPriority(false);
     } catch (err) {
-      console.error('Failed to create task:', err);
+      console.error('Failed to save task:', err);
     }
   };
 
@@ -38,7 +59,9 @@ const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ isOpen, onClose, onCr
       <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
       <div className="fixed inset-0 flex items-center justify-center p-4">
         <DialogPanel className="bg-white p-6 rounded shadow-lg w-full max-w-md">
-          <DialogTitle className="text-lg font-semibold mb-4">Create Task</DialogTitle>
+          <DialogTitle className="text-lg font-semibold mb-4">
+            {existingTask ? 'Edit Task' : 'Create Task'}
+          </DialogTitle>
           <form onSubmit={handleSubmit} className="space-y-4">
             <input
               type="text"
@@ -67,7 +90,7 @@ const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ isOpen, onClose, onCr
                 Cancel
               </button>
               <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                Save
+                {existingTask ? 'Update' : 'Save'}
               </button>
             </div>
           </form>
