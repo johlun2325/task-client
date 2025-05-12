@@ -1,35 +1,56 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { apiService } from "../../services/ApiService";
+import { Note } from "../../types/Note";
 
 interface CreateNoteModalProps {
   isOpen: boolean;
   onClose: () => void;
   onCreated: () => Promise<void>;
+  existingNote?: Note | null;
 }
 
 const CreateNoteModal: React.FC<CreateNoteModalProps> = ({
   isOpen,
   onClose,
   onCreated,
+  existingNote,
 }) => {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
+
+  useEffect(() => {
+    if (existingNote) {
+      setTitle(existingNote.title);
+      setText(existingNote.text);
+    } else {
+      setTitle("");
+      setText("");
+    }
+  }, [existingNote]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      await apiService.note.create({
-        title,
-        text,
-      });
+      if (existingNote) {
+        await apiService.note.update(existingNote.uid, {
+          title,
+          text,
+        });
+      } else {
+        await apiService.note.create({
+          title,
+          text,
+        });
+      }
+
       await onCreated();
       onClose();
       setTitle("");
       setText("");
     } catch (err) {
-      console.error("Failed to create note:", err);
+      console.error("Failed to save note:", err);
     }
   };
 
@@ -39,7 +60,7 @@ const CreateNoteModal: React.FC<CreateNoteModalProps> = ({
       <div className="fixed inset-0 flex items-center justify-center p-4">
         <DialogPanel className="bg-white p-6 rounded shadow-lg w-full max-w-md">
           <DialogTitle className="text-lg font-semibold mb-4">
-            Create Note
+            {existingNote ? "Edit Note" : "Create Note"}
           </DialogTitle>
           <form onSubmit={handleSubmit} className="space-y-4">
             <input
@@ -55,7 +76,6 @@ const CreateNoteModal: React.FC<CreateNoteModalProps> = ({
               className="w-full border px-3 py-2 rounded"
               value={text}
               onChange={(e) => setText(e.target.value)}
-              required
             />
             <div className="flex justify-end gap-2">
               <button
@@ -69,7 +89,7 @@ const CreateNoteModal: React.FC<CreateNoteModalProps> = ({
                 type="submit"
                 className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
               >
-                Save
+                {existingNote ? "Update" : "Save"}
               </button>
             </div>
           </form>

@@ -3,7 +3,7 @@ export type Note = {
   userUid: string;
   type: string;
   title: string;
-  text: string | null;
+  text: string;
   createdAt: number;
   updatedAt: number;
 };
@@ -11,7 +11,7 @@ export type Note = {
 // payload
 export type NewNote = {
     title: string;
-    text: string | null;
+    text: string;
 };
 
   // for partial updates
