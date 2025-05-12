@@ -14,7 +14,7 @@ export const useNotes = () => {
       const data = await apiService.note.getAll();
       setNotes(data);
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to fetch priority tasks';
+      const errorMessage = err instanceof Error ? err.message : 'Failed to fetch notes';
       setError(errorMessage);    } 
       finally {
       setLoading(false);

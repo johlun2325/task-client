@@ -15,7 +15,7 @@ export const useCompleted = () => {
         setTasks(response);
         setLoading(false);
       } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : 'Failed to fetch priority tasks';
+        const errorMessage = err instanceof Error ? err.message : 'Failed to fetch completed tasks';
         setError(errorMessage);
         setLoading(false);
       }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
 import { apiService } from '../../services/ApiService';
 import { Task } from '../../types/Task';
@@ -54,6 +54,18 @@ const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ isOpen, onClose, onCr
     }
   };
 
+  const handleDelete = async () => {
+    if (existingTask) {
+      try {
+        await apiService.task.delete(existingTask.uid);
+        await onCreated();
+        onClose();
+      } catch (err) {
+        console.error('Failed to delete task:', err);
+      }
+    }
+  };
+
   return (
     <Dialog open={isOpen} onClose={onClose} className="relative z-50">
       <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
@@ -85,13 +97,31 @@ const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ isOpen, onClose, onCr
               />
               High Priority
             </label>
-            <div className="flex justify-end gap-2">
-              <button type="button" onClick={onClose} className="text-gray-500 hover:underline">
-                Cancel
-              </button>
-              <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                {existingTask ? 'Update' : 'Save'}
-              </button>
+            <div className="flex justify-between gap-2 mt-4">
+              {existingTask && (
+                <button
+                  type="button"
+                  onClick={handleDelete}
+                  className="text-red-500 hover:underline"
+                >
+                  Delete
+                </button>
+              )}
+              <div className="flex gap-2 ml-auto">
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="text-gray-500 hover:underline"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                >
+                  {existingTask ? 'Update' : 'Save'}
+                </button>
+              </div>
             </div>
           </form>
         </DialogPanel>

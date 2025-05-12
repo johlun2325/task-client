@@ -77,20 +77,43 @@ const CreateNoteModal: React.FC<CreateNoteModalProps> = ({
               value={text}
               onChange={(e) => setText(e.target.value)}
             />
-            <div className="flex justify-end gap-2">
-              <button
-                type="button"
-                onClick={onClose}
-                className="text-gray-500 hover:underline"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-              >
-                {existingNote ? "Update" : "Save"}
-              </button>
+
+            <div className="flex justify-between items-center mt-4">
+              {existingNote ? (
+                <button
+                  type="button"
+                  onClick={async () => {
+                    try {
+                      await apiService.note.delete(existingNote.uid);
+                      await onCreated();
+                      onClose();
+                    } catch (err) {
+                      console.error("Failed to delete note:", err);
+                    }
+                  }}
+                  className="text-red-600 hover:underline"
+                >
+                  Delete
+                </button>
+              ) : (
+                <div />
+              )}{" "}
+              {/* empty div, alignment */}
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="text-gray-500 hover:underline"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                >
+                  {existingNote ? "Update" : "Save"}
+                </button>
+              </div>
             </div>
           </form>
         </DialogPanel>

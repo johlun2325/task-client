@@ -14,7 +14,7 @@ export const useTasks = () => {
       console.log('API response:', response);
       setTasks(response);
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to fetch priority tasks';
+      const errorMessage = err instanceof Error ? err.message : 'Failed to fetch tasks';
       setError(errorMessage);
     } finally {
       setLoading(false);

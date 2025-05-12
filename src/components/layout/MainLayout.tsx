@@ -48,7 +48,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
               </li>
               <li>
                 <Link to="/completed" className="block p-2 rounded hover:bg-gray-100">
-                  Done
+                  Completed
                 </Link>
               </li>
             </ul>
