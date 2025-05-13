@@ -1,3 +1,4 @@
+import Feedback from '../components/feedback/PriorityFeedback';
 import Notes from '../components/notes/Notes';
 import PriorityTasks from '../components/tasks/PriorityTasks';
 import TaskList from '../components/tasks/Tasks';
@@ -15,11 +16,11 @@ const HomePage = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {/* Reminders */}
+          {/* Feedback */}
           <div className="bg-white p-6 rounded-lg shadow h-96">
-            <h3 className="text-lg font-medium mb-4">Reminders</h3>
+            <h3 className="text-lg font-medium mb-4">Feedback and warnings</h3>
             <div className="h-[calc(100%-2rem)] overflow-y-auto">
-              {/* Content */}
+              <Feedback />
             </div>
           </div>
           

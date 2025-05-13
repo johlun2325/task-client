@@ -2,6 +2,7 @@ import { authService } from '../auth/services/AuthService';
 import { Note, NewNote, NoteUpdate } from '../types/Note';
 import { Task, NewTask, TaskUpdate} from '../types/Task'
 import { ApiResponse } from '../types/ApiResponse';
+import { FeedbackEvent } from '../types/Feedback';
 
 const API_BASE_URL = 'http://localhost:8080';
 
@@ -155,6 +156,22 @@ export const apiService = {
       if (!response.ok) {
         throw new Error('Failed to delete task');
       }
+    }
+  },
+
+  feedback: {
+    get: async (): Promise<FeedbackEvent[]> => {
+      const response = await apiService.fetchAuthenticated('/feedback');
+
+      if (response.status === 204) {
+        return [];
+      }
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch feedback');
+      }
+
+      return response.json();
     }
   }
 };
