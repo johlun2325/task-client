@@ -9,7 +9,7 @@ import LandingPage from './pages/LandingPage';
 import HomePage from './pages/Home';
 import AllTasks from './pages/AllTasks';
 import AllNotes from './pages/AllNotes';
-import CompletedTasks from './pages/CompletedTasks';
+import CompletedTasks from './pages/AllCompletedTasks';
 
 function App() {
   useEffect(() => {

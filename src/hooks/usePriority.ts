@@ -1,28 +1,29 @@
-import { useState, useEffect } from 'react';
-import { apiService } from '../services/ApiService'
+import { useState, useEffect, useCallback } from 'react';
+import { apiService } from '../services/ApiService';
 import { Task } from '../types/Task';
 
 export const usePriority = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const response: Task[] = await apiService.task.getPriority();
-        console.log('API response:', response);
-        setTasks(response);
-        setLoading(false);
-      } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : 'Failed to fetch priority tasks';
-        setError(errorMessage);
-        setLoading(false);
-      }
-    };
-
-    fetchTasks();
+  const fetchTasks = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response: Task[] = await apiService.task.getPriority();
+      console.log('API response:', response);
+      setTasks(response);
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to fetch priority tasks';
+      setError(errorMessage);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
-  return { tasks, loading, error };
+  useEffect(() => {
+    fetchTasks();
+  }, [fetchTasks]);
+
+  return { tasks, loading, error, refetch: fetchTasks };
 };

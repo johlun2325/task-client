@@ -1,29 +1,19 @@
 import { useState } from "react";
 import { useTasks } from "../../hooks/useTasks";
 import CreateTaskModal from "../tasks/CreateTaskModal";
-import { apiService } from "../../services/ApiService";
 import { Task } from "../../types/Task";
+import { useToggleCompleted } from "../../hooks/useToggleCompleted"; // Importera den nya hooken
 
 const TaskList = () => {
   const { tasks, loading, error, refetch } = useTasks();
+  const { handleToggleCompleted } = useToggleCompleted();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
 
   const handleEditTask = (task: Task) => {
     setSelectedTask(task);
     setIsModalOpen(true);
-  };
-
-  const handleToggleCompleted = async (
-    uid: string,
-    currentCompleted: boolean
-  ) => {
-    try {
-      await apiService.task.update(uid, { completed: !currentCompleted });
-      refetch();
-    } catch (err) {
-      console.error("Failed to update task:", err);
-    }
   };
 
   if (loading) return <p className="text-gray-500">Loading tasks...</p>;
@@ -38,8 +28,8 @@ const TaskList = () => {
             onClick={() => {
               setSelectedTask(null);
               setIsModalOpen(true);
-            }}          
-            >
+            }}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5 mr-2"
@@ -57,38 +47,38 @@ const TaskList = () => {
         </div>
 
         {tasks
+          .filter((task) => !task.completed)
           .slice()
           .sort((a, b) => b.updatedAt - a.updatedAt)
           .map((task) => (
-          <li key={task.uid} className="py-4">
-            <div className="flex items-start">
-              <input
-                type="checkbox"
-                checked={task.completed}
-                onChange={() => handleToggleCompleted(task.uid, task.completed)}
-                className="mt-1 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-              />
-              <div className="ml-3 flex-grow">
-                <div className="flex items-center justify-between">
-                  <p
-                    onClick={() => handleEditTask(task)}
-                    className={`text-sm font-medium cursor-pointer hover:underline 
-                      ${task.completed ? "line-through text-gray-400" : "text-gray-900"}`
-                  }>
-                    {task.title}
-                  </p>
-
-                  {task.priority && (
-                    <span className="bg-red-100 text-red-800 text-xs font-semibold px-2.5 py-0.5 rounded">
-                      High Priority
-                    </span>
-                  )}
+            <li key={task.uid} className="py-4">
+              <div className="flex items-start">
+                <input
+                  type="checkbox"
+                  checked={task.completed}
+                  onChange={() => handleToggleCompleted(task.uid, task.completed, refetch)}
+                  className="mt-1 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                />
+                <div className="ml-3 flex-grow">
+                  <div className="flex items-center justify-between">
+                    <p
+                      onClick={() => handleEditTask(task)}
+                      className={`text-sm font-medium cursor-pointer hover:underline 
+                        ${task.completed ? "line-through text-gray-400" : "text-gray-900"}`}
+                    >
+                      {task.title}
+                    </p>
+                    {task.priority && (
+                      <span className="bg-red-100 text-red-800 text-xs font-semibold px-2.5 py-0.5 rounded">
+                        High Priority
+                      </span>
+                    )}
+                  </div>
+                  <p className="mt-1 text-sm text-gray-500">{task.description}</p>
                 </div>
-                <p className="mt-1 text-sm text-gray-500">{task.description}</p>
               </div>
-            </div>
-          </li>
-        ))}
+            </li>
+          ))}
       </ul>
 
       {isModalOpen && (
