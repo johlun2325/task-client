@@ -1,4 +1,4 @@
-import Feedback from '../components/feedback/PriorityFeedback';
+import Feedback from '../components/feedback/FeedbackList';
 import Notes from '../components/notes/Notes';
 import PriorityTasks from '../components/tasks/PriorityTasks';
 import TaskList from '../components/tasks/Tasks';

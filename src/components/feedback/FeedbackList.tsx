@@ -1,0 +1,47 @@
+import React from 'react';
+import { useFeedback } from '../../hooks/useFeedback';
+
+const Feedback: React.FC = () => {
+  const { feedback, loading, error, refetch } = useFeedback();
+  
+  // Debug
+  console.log('Feedback component rendering with:', { 
+    feedbackCount: feedback?.length, 
+    loading, 
+    error 
+  });
+
+  if (loading) return <div className="text-gray-500">Loading feedback...</div>;
+  if (error) return <div className="text-red-500">Error: {error}</div>;
+  
+  return (
+    <div className="mt-4 p-4 bg-white rounded-md shadow">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-lg font-medium">Feedback</h2>
+        <button 
+          onClick={refetch}
+          className="px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600"
+        >
+          Refresh
+        </button>
+      </div>
+      
+      {feedback && feedback.length > 0 ? (
+        <ul className="space-y-2">
+          {feedback.map((event, index) => (
+            <li 
+              key={event.feedbackUid || `feedback-${index}`} 
+              className="p-3 bg-blue-50 rounded-md"
+            >
+              <p className="text-sm text-gray-800">{event.feedback}</p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="text-gray-500 italic">No feedback available at the moment.</p>
+      )}
+    </div>
+  );
+};
+
+export default Feedback;
