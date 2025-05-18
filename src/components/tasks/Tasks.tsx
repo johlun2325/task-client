@@ -3,7 +3,7 @@ import { useTasks } from "../../hooks/useTasks";
 import CreateTaskModal from "../tasks/CreateTaskModal";
 import { Task } from "../../types/Task";
 import { useToggleCompleted } from "../../hooks/useToggleCompleted";
-import { useRefetch } from "../../context/RefetchContext";
+import { useRefetch } from "../../hooks/useRefetch";
 
 const TaskList = () => {
   const { tasks, loading, error, refetch } = useTasks();

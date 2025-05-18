@@ -3,7 +3,7 @@ import { usePriority } from "../../hooks/usePriority";
 import CreateTaskModal from "../tasks/CreateTaskModal";
 import { Task } from "../../types/Task";
 import { useToggleCompleted } from "../../hooks/useToggleCompleted";
-import { useRefetch } from "../../context/RefetchContext";
+import { useRefetch } from "../../hooks/useRefetch";
 
 const PriorityTaskList = () => {
   const { tasks, loading, error, refetch } = usePriority();

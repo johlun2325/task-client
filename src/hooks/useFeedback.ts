@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { apiService } from '../services/ApiService';
 import { FeedbackEvent } from '../types/Feedback';
 import { feedbackPoller } from '../services/FeedbackPollerService';
-import { useRefetch } from '../context/RefetchContext';
+import { useRefetch } from "../hooks/useRefetch";
 
 export const useFeedback = () => {
   const [feedback, setFeedback] = useState<FeedbackEvent[]>([]);
