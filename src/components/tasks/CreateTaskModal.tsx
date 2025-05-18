@@ -70,56 +70,76 @@ const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ isOpen, onClose, onCr
     <Dialog open={isOpen} onClose={onClose} className="relative z-50">
       <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
       <div className="fixed inset-0 flex items-center justify-center p-4">
-        <DialogPanel className="bg-white p-6 rounded shadow-lg w-full max-w-md">
-          <DialogTitle className="text-lg font-semibold mb-4">
+        <DialogPanel className="bg-white p-8 rounded-lg shadow-xl w-full max-w-3xl mx-auto">
+          <DialogTitle className="text-2xl font-semibold mb-6">
             {existingTask ? 'Edit Task' : 'Create Task'}
           </DialogTitle>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <input
-              type="text"
-              placeholder="Title"
-              className="w-full border px-3 py-2 rounded"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              required
-            />
-            <textarea
-              placeholder="Description"
-              className="w-full border px-3 py-2 rounded"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-            <label className="flex items-center gap-2 text-sm">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label htmlFor="taskTitle" className="block text-sm font-medium text-gray-700 mb-1">
+                Title
+              </label>
               <input
-                type="checkbox"
-                checked={priority}
-                onChange={(e) => setPriority(e.target.checked)}
+                id="taskTitle"
+                type="text"
+                placeholder="Task title"
+                className="w-full border border-gray-300 px-4 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                required
               />
-              High Priority
-            </label>
-            <div className="flex justify-between gap-2 mt-4">
+            </div>
+            
+            <div>
+              <label htmlFor="taskDescription" className="block text-sm font-medium text-gray-700 mb-1">
+                Description
+              </label>
+              <textarea
+                id="taskDescription"
+                placeholder="Enter task details..."
+                className="w-full border border-gray-300 px-4 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                rows={8}
+                style={{ minHeight: "200px", resize: "vertical" }}
+              />
+            </div>
+            
+            <div className="flex items-center gap-3 pt-2">
+              <label className="flex items-center gap-3 text-base cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={priority}
+                  onChange={(e) => setPriority(e.target.checked)}
+                  className="w-5 h-5 rounded text-blue-600 focus:ring-blue-500 border-gray-300"
+                />
+                <span className="font-medium">High Priority</span>
+              </label>
+            </div>
+            
+            <div className="flex justify-between items-center pt-4 border-t border-gray-200 mt-4">
               {existingTask && (
                 <button
                   type="button"
                   onClick={handleDelete}
-                  className="text-red-500 hover:underline"
+                  className="text-red-600 hover:text-red-800 font-medium hover:underline"
                 >
-                  Delete
+                  Delete Task
                 </button>
               )}
-              <div className="flex gap-2 ml-auto">
+              <div className="flex gap-3 ml-auto">
                 <button
                   type="button"
                   onClick={onClose}
-                  className="text-gray-500 hover:underline"
+                  className="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                  className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition-colors"
                 >
-                  {existingTask ? 'Update' : 'Save'}
+                  {existingTask ? 'Update Task' : 'Save Task'}
                 </button>
               </div>
             </div>

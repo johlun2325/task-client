@@ -51,7 +51,7 @@ const handleEditNote = (note: Note) => {
           <div 
             key={note.uid}
             onClick={() => handleEditNote(note)}
-            className="cursor-pointer bg-yellow-100 p-3 rounded shadow-sm aspect-square transform hover:scale-105 hover:shadow-md cursor-pointer transition-all"
+            className="bg-yellow-100 p-3 rounded shadow-sm aspect-square transform hover:scale-105 hover:shadow-md cursor-pointer transition-all"
           >
             <h3 
             onClick={() => handleEditNote(note)}
