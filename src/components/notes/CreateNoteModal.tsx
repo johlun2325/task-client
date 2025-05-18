@@ -98,7 +98,6 @@ const CreateNoteModal: React.FC<CreateNoteModalProps> = ({
               ) : (
                 <div />
               )}{" "}
-              {/* empty div, alignment */}
               <div className="flex gap-2">
                 <button
                   type="button"

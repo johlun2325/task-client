@@ -7,11 +7,7 @@ const TaskForm = () => {
 
   
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Task data:', { taskName, description, priority });
-    
-    //Make API call, via service
-
+    e.preventDefault();    
     setTaskName('');
     setDescription('');
     setPriority(false);
@@ -30,7 +26,7 @@ const TaskForm = () => {
           onChange={(e) => setTaskName(e.target.value)}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
           required
-        />
+          />
       </div>
       
       <div>
@@ -66,8 +62,7 @@ const TaskForm = () => {
       
       <button
         type="submit"
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md"
-      >
+        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md">
         Save
       </button>
     </form>

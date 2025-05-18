@@ -3,25 +3,16 @@ import { useFeedback } from '../../hooks/useFeedback';
 
 const Feedback: React.FC = () => {
   const { feedback, loading, error, refetch } = useFeedback();
-  
-  // Debug
-  console.log('Feedback component rendering with:', { 
-    feedbackCount: feedback?.length, 
-    loading, 
-    error 
-  });
 
   if (loading) return <div className="text-gray-500">Loading feedback...</div>;
   if (error) return <div className="text-red-500">Error: {error}</div>;
   
   return (
-    <div className="mt-4 p-4 bg-white rounded-md shadow">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-lg font-medium">Feedback</h2>
+    <div className="mt-2 p-4 bg-white">
+      <div className="flex justify-between items-center mb-2">
         <button 
           onClick={refetch}
-          className="px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600"
-        >
+          className="px-3 py-1 bg-white-500 text-white text-sm rounded hover:bg-yellow-600">
           Refresh
         </button>
       </div>

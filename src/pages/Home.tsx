@@ -18,7 +18,7 @@ const HomePage = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Feedback */}
           <div className="bg-white p-6 rounded-lg shadow h-96">
-            <h3 className="text-lg font-medium mb-4">Feedback and warnings</h3>
+            <h3 className="text-lg font-medium mb-4">Feedback</h3>
             <div className="h-[calc(100%-2rem)] overflow-y-auto">
               <Feedback />
             </div>
@@ -26,7 +26,7 @@ const HomePage = () => {
           
           {/* Tasks */}
           <div className="bg-white p-6 rounded-lg shadow h-96">
-            <h3 className="text-lg font-medium mb-4">All Tasks</h3>
+            <h3 className="text-lg font-medium mb-4">Your Tasks</h3>
             <div className="h-[calc(100%-2rem)] overflow-y-auto">
               <TaskList />
             </div>

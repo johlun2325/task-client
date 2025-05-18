@@ -5,11 +5,7 @@ const NoteForm = () => {
   const [content, setContent] = useState('');
   
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Note data:', { title, content });
-    
-    //Make API call, via service
-    
+    e.preventDefault();        
     setTitle('');
     setContent('');
   };
