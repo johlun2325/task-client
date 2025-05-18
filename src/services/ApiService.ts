@@ -3,8 +3,11 @@ import { Note, NewNote, NoteUpdate } from '../types/Note';
 import { Task, NewTask, TaskUpdate} from '../types/Task'
 import { ApiResponse } from '../types/ApiResponse';
 import { FeedbackEvent } from '../types/Feedback';
+import { getConfig } from '../config';
 
-const API_BASE_URL = 'http://localhost:8080';
+function getApiBaseUrl() {
+  return getConfig().apiBaseUrl;
+}
 
 export const apiService = {
   // Generic method for api calls with authentication
@@ -21,7 +24,7 @@ export const apiService = {
       'Content-Type': 'application/json'
     };
     
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+    const response = await fetch(`${getApiBaseUrl()}${endpoint}`, {
       ...options,
       headers
     });
