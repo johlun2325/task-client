@@ -1,4 +1,8 @@
-const API_BASE_URL = 'http://localhost:8080';
+import { getConfig } from '../../config';
+
+function getApiBaseUrl() {
+  return getConfig().apiBaseUrl;
+}
 
 export const authService = {
   // Check if user is logged in
@@ -78,7 +82,7 @@ export const authService = {
 
   // Validate token via backend call
   validateToken: async (token: string): Promise<boolean> => {
-    const response = await fetch(`${API_BASE_URL}/auth/validate`, {
+    const response = await fetch(`${getApiBaseUrl()}/auth/validate`, {
       method: 'GET',
       headers: { 'Authorization': `Bearer ${token}` },
     });
@@ -89,7 +93,7 @@ export const authService = {
 
   // Get login URL from backend
   getLoginUrl: async (): Promise<string> => {
-    const response = await fetch(`${API_BASE_URL}/auth/login?provider=google`, { method: 'GET' });
+    const response = await fetch(`${getApiBaseUrl()}/auth/login?provider=google`, { method: 'GET' });
 
     if (!response.ok) throw new Error('Failed to get login URL');
     
@@ -101,7 +105,7 @@ export const authService = {
 
   // Notify backend about logout
   notifyBackendLogout: async (token: string): Promise<void> => {
-    await fetch(`${API_BASE_URL}/auth/logout`, {
+    await fetch(`${getApiBaseUrl()}/auth/logout`, {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${token}` },
     });
